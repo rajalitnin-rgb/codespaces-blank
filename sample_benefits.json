@@ -1,0 +1,22 @@
+{
+  "plans": [
+    {
+      "name": "Platinum",
+      "benefits": [
+        {"name": "Dental", "value": 100},
+        {"name": "Vision", "value": 50},
+        {"name": "Hearing", "value": 25},
+        {"name": "Prescription", "value": 10}
+      ]
+    },
+    {
+      "name": "Gold",
+      "benefits": [
+        {"name": "Dental", "value": 80},
+        {"name": "Vision", "value": 40},
+        {"name": "Hearing", "value": 15},
+        {"name": "Prescription", "value": 5}
+      ]
+    }
+  ]
+}

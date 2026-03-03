@@ -1,0 +1,96 @@
+excel:
+  template:
+    templatePath: ./templates/benefit_plan.xlsx
+    outputPath: ./output
+    sheetNames:
+      - Sheet1
+
+    # When set to true the service will ignore any static fieldMappings and
+    # instead build the plan/benefit layout from the JSON payload.  This is
+    # how you deal with an unknown number of plans or benefits.
+    dynamicPlanColumns: true
+
+    # path to the array containing plan objects; the default is "plans"
+    # but some payloads may use a different property name (e.g. "planlist"
+    # or "data.plans").  Because the service discovers entries at runtime
+    # you still don't list every plan here – just point to the list.
+    #planListJsonPath: plans
+
+    # because the template itself already contains the benefit names in
+    # column A we supply their location here.  the service will read those
+    # cells and then match incoming benefit values by name when generating
+    # mappings.
+    benefitNameLocation:
+      sheetName: Sheet1
+      startRow: 1      # first benefit name row (zero-based)
+      columnIndex: 0   # column A
+      # count: 4       # optional, will stop when a blank cell is hit if omitted
+
+    # the following block is left as a reference; it is not used when
+    # dynamicPlanColumns is enabled.  You could remove it entirely or use it
+    # as a starting point for more complex scenarios.
+    # fieldMappings demonstrates how to place plan names and benefit values
+    # fieldMappings:
+    #   # first plan header (will appear in column B)
+    #   - jsonPath: plans[0].name
+    #     sheetName: Sheet1
+    #     rowIndex: 0
+    #     columnIndex: 1
+    #     dataType: string
+    #
+    #   # benefit rows for plan 0: values go in column C (one to the right of header)
+    #   - jsonPath: plans[0].benefits[0].value   # Dental
+    #     sheetName: Sheet1
+    #     rowIndex: 1
+    #     columnIndex: 2
+    #     dataType: number
+    #   - jsonPath: plans[0].benefits[1].value   # Vision
+    #     sheetName: Sheet1
+    #     rowIndex: 2
+    #     columnIndex: 2
+    #     dataType: number
+    #   - jsonPath: plans[0].benefits[2].value   # Hearing
+    #     sheetName: Sheet1
+    #     rowIndex: 3
+    #     columnIndex: 2
+    #     dataType: number
+    #   - jsonPath: plans[0].benefits[3].value   # Prescription
+    #     sheetName: Sheet1
+    #     rowIndex: 4
+    #     columnIndex: 2
+    #     dataType: number
+    #
+    #   # second plan header (leave one blank column between plans)
+    #   - jsonPath: plans[1].name
+    #     sheetName: Sheet1
+    #     rowIndex: 0
+    #     columnIndex: 4
+    #     dataType: string
+    #
+    #   # benefit values for plan 1 (column 5)
+    #   - jsonPath: plans[1].benefits[0].value
+    #     sheetName: Sheet1
+    #     rowIndex: 1
+    #     columnIndex: 5
+    #     dataType: number
+    #   - jsonPath: plans[1].benefits[1].value
+    #     sheetName: Sheet1
+    #     rowIndex: 2
+    #     columnIndex: 5
+    #     dataType: number
+    #   - jsonPath: plans[1].benefits[2].value
+    #     sheetName: Sheet1
+    #     rowIndex: 3
+    #     columnIndex: 5
+    #     dataType: number
+    #   - jsonPath: plans[1].benefits[3].value
+    #     sheetName: Sheet1
+    #     rowIndex: 4
+    #     columnIndex: 5
+    #     dataType: number
+
+# notes:
+# - this configuration is static and works for two plans with four benefits.
+# - for variable numbers of plans/benefits you would generate a similar mapping list
+#   at runtime using the techniques discussed earlier (scan the first column for
+#   benefit names, compute base column for each plan, etc.).

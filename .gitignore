@@ -1,0 +1,34 @@
+# Maven
+target/
+*.class
+*.jar
+*.war
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.backup
+*.flc
+.flc
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build
+build/
+.gradle/
+bin/
+
+# Logs
+*.log
+logs/
+
+# Output
+output/

@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: excel-template-merger
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+logging:
+  level:
+    root: INFO
+    com.example.excel: DEBUG
+
+excel:
+  template:
+    # Path to the Excel template file
+    # Use reindex_test_template.xlsx to test intelligent reindexing with formulas
+    # Use formula_template.xlsx to test preserveFormulas feature
+    # Use sample_template.xlsx for standard field mapping tests
+    templatePath: ./templates/reindex_test_template.xlsx
+    
+    # Output directory for merged Excel files
+    outputPath: ./output
+    
+    # Sheet names in the template
+    sheetNames:
+      - Sheet1
+      - Sheet2
+    
+    # Field mappings from JSON to Excel cells
+    fieldMappings:
+      # Intelligent Reindexing Test
+      # Template Row 1: [=A2*2] [Data] [=B1*1.1] [Preserve] [Test]
+      # Data: [100, 200, 300]
+      # Expected result with preserveFormulas=true & reindexing:
+      #   A1: formula =A2*2 (preserved)
+      #   B1: 100 (first data value)
+      #   C1: formula =B1*1.1 (preserved)
+      #   D1: 200 (second data value, reindexed after skipped formula)
+      #   E1: 300 (third data value)
+      - jsonPath: reindexData
+        sheetName: Sheet1
+        rowIndex: 0
+        columnIndex: 0
+        dataType: number
+        format: null
+        fillDirection: HORIZONTAL
+        preserveFormulas: true   # Smart reindexing: skips formulas, shifts data
